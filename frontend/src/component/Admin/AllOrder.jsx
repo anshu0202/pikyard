@@ -38,7 +38,6 @@ const AllOrder = ({ history }) => {
       toast.error(deleteError);
       dispatch(clearErrors());
     }
-
     if (isDeleted) {
       toast.success("Order Deleted Successfully");
       history.push("/admin/orders");

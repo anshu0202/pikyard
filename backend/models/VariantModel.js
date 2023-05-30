@@ -13,6 +13,10 @@ const variantSchema = new mongoose.Schema({
     mm:{
         type:Number,
         required:[true,"Please give size of product"]
+    },
+    Stock:{
+        type:Number,
+        required:[true,"Please add the stock of the product"]
     }
 })
 module.exports = mongoose.model("Variant",variantSchema);

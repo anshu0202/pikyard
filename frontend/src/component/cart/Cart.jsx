@@ -10,6 +10,7 @@ import BottomTab from "../../more/BottomTab";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 import { useEffect, useState } from "react";
 import { getCartItems , deleteCartItem, updateCartItem} from "../../service/cartApi";
 
@@ -25,7 +26,7 @@ const Cart = ({ history }) => {
 
 useEffect(()=>{
             getItems();
-},[tPrice,items]);
+},[]);
 
    const  getItems= async()=>{
           const data=await getCartItems();
@@ -52,29 +53,23 @@ useEffect(()=>{
     }
       const res=await updateCartItem(id,quantity+1);
       if(res){
-        getCartItems();
+        
+        getItems();
       }
-    // dispatch(addItemsToCart(id, newQty));
+    
   };
 
   const decreaseQuantity = async(id, quantity) => {
-    // const newQty = quantity - 1;
-    // if (1 >= quantity) {
-    //   return;
-    // }
-
-    // when the quantity is 1 then user cannot decrease it to 0
     if(quantity==1) return ;
     const res=await updateCartItem(id,quantity-1);
-      if(res){
-        getCartItems();
+      if(res){  
+        getItems();
       }
-
-    // dispatch(addItemsToCart(id, newQty));
   };
 
   const deleteCartItems = async(id) => {
       const data= await deleteCartItem(id);
+      console.log("delete dd ", data);
       if(data){
         getItems();
       }
@@ -87,7 +82,7 @@ useEffect(()=>{
 
   return (
     <>
-      {/* {cartItems.length === 0 ? ( */}
+     
       {items.length === 0 ? (
         <div className="emptyCart">
           <RemoveShoppingCartIcon />

@@ -59,6 +59,11 @@ exports.removeWishlistData = catchAsyncErrors(async (req, res, next) => {
 // add To Cart
 exports.addToCart = catchAsyncErrors(async (req, res, next) => {
 
+   try{
+
+   
+  
+
   const {
     productName,
     quantity,
@@ -71,7 +76,11 @@ exports.addToCart = catchAsyncErrors(async (req, res, next) => {
   } = req.body;
   
 
+  
+
   const exists= await Cart.findOne({userId,productId,size})
+
+  console.log("exists -> ",exists);
 
   if(exists){
        const quantity=exists.quantity+1;  
@@ -82,8 +91,6 @@ exports.addToCart = catchAsyncErrors(async (req, res, next) => {
         success: true,
         cart,
       });
-    
-
   }
     else{  
   const cart = await Cart.create({
@@ -96,15 +103,17 @@ exports.addToCart = catchAsyncErrors(async (req, res, next) => {
     Stock,
     size,
   });
-
   res.status(200).json({
     success: true,
     cart,
   });
-
-
 }
-});
+}
+catch(error){
+    console.log("error is ",error.message);
+   }
+
+  });
 
 // update Cart
 exports.updateCart = catchAsyncErrors(async (req, res, next) => {
@@ -135,11 +144,10 @@ exports.getCartData = catchAsyncErrors(async (req, res, next) => {
 
 // remove Cart Data
 exports.removeCartData = catchAsyncErrors(async (req, res, next) => {
- 
   const userId= req.params.id1;
   const productId= req.params.id2;
+
   const deletedData=await Cart.findOneAndDelete({userId,productId});
-  // console.log("deleted data ", deletedData);
   res.status(200).json({
     success: true,
     message: "Item removed from cart",

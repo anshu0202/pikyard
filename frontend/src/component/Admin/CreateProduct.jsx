@@ -14,6 +14,14 @@ import SideBar from "./Sidebar";
 import { NEW_PRODUCT_RESET } from "../../constans/ProductConstans";
 import { ToastContainer, toast } from 'react-toastify';
 
+// import {createVariant} from "../../service/productApi";
+import {createVariant} from "../../service/productApi";
+
+
+
+import AddVariant from "./AddVariant";
+
+
 const CreateProduct = ({ history }) => {
   const dispatch = useDispatch();
 
@@ -42,6 +50,11 @@ const CreateProduct = ({ history }) => {
     "Others"
   ];
 
+  const [variant,setVariant]=useState([]);
+    // console.log("v2 jj ",variant);
+
+  const [openModal,setOpenModal]=useState(false);
+
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -55,22 +68,37 @@ const CreateProduct = ({ history }) => {
     }
   }, [dispatch, alert, error, history, success]);
 
-  const createProductSubmitHandler = (e) => {
+  const createProductSubmitHandler = async(e) => {
     e.preventDefault();
+    console.log("v2 jj ",variant);
+
+
+    if(variant.length==0){
+      toast.error("Add atleast one variant of the product")
+      return;
+    }
+
+
+
+    //Adding all the variants of product in the database;
+    const addVariants=await createVariant(variant,name);
+
+
 
     const myForm = new FormData();
 
     myForm.set("name", name);
-    myForm.set("price", price);
+    myForm.set("price", variant[0]?.price);
     myForm.set("offerPrice", offerPrice);
     myForm.set("description", description);
     myForm.set("category", category);
     myForm.set("Stock", Stock);
+   
+    // images.forEach((image) => {
+    //   myForm.append("images", image);
+    // });
+    // dispatch(createProduct(myForm));
 
-    images.forEach((image) => {
-      myForm.append("images", image);
-    });
-    dispatch(createProduct(myForm));
   };
 
   const createProductImagesChange = (e) => {
@@ -124,7 +152,7 @@ const CreateProduct = ({ history }) => {
                 onChange={(e) => setOfferPrice(e.target.value)}
               />
             </div>
-
+{/* 
             <div>
               <AttachMoneyIcon />
               <input
@@ -133,7 +161,7 @@ const CreateProduct = ({ history }) => {
                 required
                 onChange={(e) => setPrice(e.target.value)}
               />
-            </div>
+            </div> */}
 
             <div>
               <DescriptionIcon />
@@ -158,7 +186,7 @@ const CreateProduct = ({ history }) => {
               </select>
             </div>
 
-            <div>
+            {/* <div>
               <StorageIcon />
               <input
                 type="number"
@@ -166,7 +194,8 @@ const CreateProduct = ({ history }) => {
                 required
                 onChange={(e) => setStock(e.target.value)}
               />
-            </div>
+            </div> */}
+           
 
             <div id="createProductFormFile">
               <input
@@ -184,6 +213,17 @@ const CreateProduct = ({ history }) => {
               ))}
             </div>
 
+            
+              <Button 
+              id="createProductBtn"
+              disabled={loading ? true : false}
+              onClick={()=>setOpenModal(true)}
+            >
+              Add Variant
+            </Button>
+                
+          
+
             <Button
               id="createProductBtn"
               type="submit"
@@ -192,6 +232,7 @@ const CreateProduct = ({ history }) => {
               Create
             </Button>
           </form>
+          
         </div>
       </div>
       <ToastContainer
@@ -205,6 +246,7 @@ const CreateProduct = ({ history }) => {
         draggable
         pauseOnHover
       />
+      <AddVariant  open={openModal} setOpenModal={setOpenModal} variant={variant} setVariant={setVariant} />
     </Fragment>
   );
 };

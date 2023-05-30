@@ -20,25 +20,25 @@ router
   .route("/removeWishlist/:id")
   .delete(isAuthenticatedUser, removeWishlistData);
 
-// router.route("/addToCart").post(isAuthenticatedUser, addToCart);
-router.route("/addToCart").post(addToCart);
+router.route("/addToCart").post(isAuthenticatedUser, addToCart);
+// router.route("/addToCart").post(addToCart);
 
-// router.route("/cart/:id").get(isAuthenticatedUser, getCartData);
-router.route("/cart/:id").get(getCartData);
-
-
-// router.route("/cart/update/:id").put(isAuthenticatedUser, updateCart);
-router.route("/cart/update/:id").put(updateCart);
+router.route("/cart/:id").get(isAuthenticatedUser, getCartData);
+// router.route("/cart/:id").get(getCartData);
 
 
+router.route("/cart/update/:id").put(isAuthenticatedUser, updateCart);
+// router.route("/cart/update/:id").put(updateCart);
 
-// router.route("/removeCart/:id").delete(isAuthenticatedUser, removeCartData);
-router.route("/removeCartItem/:id1/:id2").delete(removeCartData);
+
+
+router.route("/removeCartItem/:id1/:id2").delete(isAuthenticatedUser,removeCartData);
+
 
 
 
 //empty all cart items on successfull payment of cart items
-router.route("/emptyCartItems/:id").delete(emptyCartItems);
+router.route("/emptyCartItems/:id").delete(isAuthenticatedUser,emptyCartItems);
 
 
 

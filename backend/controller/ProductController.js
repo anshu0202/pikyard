@@ -8,6 +8,9 @@ const cloudinary = require("cloudinary");
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   let images = [];
 
+  // console.log("por djjrve ", req.body);
+    console.log("hihihihi")
+  try{
   if (typeof req.body.images === "string") {
     images.push(req.body.images);
   } else {
@@ -36,6 +39,12 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     success: true,
     product,
   });
+
+}
+
+  catch(error){
+    console.log("error in adding new product ", error.message);
+  }
 });
 
 // Get All Product (Admin)

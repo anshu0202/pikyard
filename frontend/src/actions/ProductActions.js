@@ -107,11 +107,15 @@ export const newReview = (reviewData) => async (dispatch) => {
 // Create Product --------Admin
 export const createProduct = (productData) => async (dispatch) => {
   try {
+
+    console.log("pro data is ", productData);
     dispatch({ type: NEW_PRODUCT_REQUEST });
 
     const config = {
       headers: { "Content-Type": "application/json" },
     };
+
+    
 
     const { data } = await axios.post(
       `/api/v2/product/new`,

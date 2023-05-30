@@ -21,6 +21,7 @@ import ReviewCard from "./ReviewCard.jsx";
 import { NEW_REVIEW_RESET } from "../../constans/ProductConstans";
 import BottomTab from "../../more/BottomTab";
 import Loading from "../../more/Loader";
+import { json } from "body-parser";
 
 const ProductDetails = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -35,16 +36,15 @@ const ProductDetails = ({ match, history }) => {
 
  
   const [price, setPrice] = useState(product?.price);
-  const [offerPrice, setOfferPrice] = useState(product.price);
+  const [offerPrice, setOfferPrice] = useState(product?.price);
 
   const updateProduct = (newProduct) => {
-    setPrice(newProduct.price);
+    setPrice(newProduct?.price);
     if(newProduct.offerPrice>0){
       let discount = (product.price * product.offerPrice) / 100;
         setOfferPrice(parseInt(product.price - discount))
     }
     else{
-
       setOfferPrice(newProduct.price);
     }
   }
@@ -136,14 +136,14 @@ const ProductDetails = ({ match, history }) => {
   };
 
   const addToCartHandler = async () => {
-
+      
    
     const pro = {
       productName: product.name,
       quantity: quantity,
       productImages: product.images,
       productPrice: price,
-      userId: "111",
+      userId: JSON.parse(localStorage.getItem("user"))._id,
       productId: product?._id,
       Stock: product.Stock,
       size: selectedOption===0?variants[0]?.mm:selectedOption
@@ -166,7 +166,8 @@ const ProductDetails = ({ match, history }) => {
 
   return (
     <>
-      {loading && variants?.length===0 ? (
+       {console.log("loading ", loading, "  vari ",variants?.length)}
+      {variants?.length===0 || variants?.length===undefined   ? (
         <Loading />
       ) : (
         <>
@@ -188,7 +189,7 @@ const ProductDetails = ({ match, history }) => {
             </div>
             <div className="varse__2">
               <div className="detailsBlock-1">
-                <h2>{product.name}</h2>
+                <h2>{product?.name}</h2>
               </div>
               <div className="detailsBlock-2">
                 <Rating {...options} />
