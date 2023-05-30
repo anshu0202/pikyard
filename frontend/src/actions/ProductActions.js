@@ -116,7 +116,6 @@ export const createProduct = (productData) => async (dispatch) => {
     };
 
     
-
     const { data } = await axios.post(
       `/api/v2/product/new`,
       productData,

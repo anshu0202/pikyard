@@ -73,15 +73,15 @@ const CreateProduct = ({ history }) => {
     console.log("v2 jj ",variant);
 
 
-    if(variant.length==0){
-      toast.error("Add atleast one variant of the product")
-      return;
-    }
+    // if(variant.length==0){
+    //   toast.error("Add atleast one variant of the product")
+    //   return;
+    // }
 
 
 
     //Adding all the variants of product in the database;
-    const addVariants=await createVariant(variant,name);
+    // const addVariants=await createVariant(variant,name);
 
 
 
@@ -92,12 +92,14 @@ const CreateProduct = ({ history }) => {
     myForm.set("offerPrice", offerPrice);
     myForm.set("description", description);
     myForm.set("category", category);
-    myForm.set("Stock", Stock);
+    myForm.set("Stock", variant[0]?.Stock);
+
+    console.log("Stock is ",variant[0]?.Stock);
    
-    // images.forEach((image) => {
-    //   myForm.append("images", image);
-    // });
-    // dispatch(createProduct(myForm));
+    images.forEach((image) => {
+      myForm.append("images", image);
+    });
+    dispatch(createProduct(myForm));
 
   };
 

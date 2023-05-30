@@ -14,7 +14,7 @@ const productSchema = new mongoose.Schema({
     },
     variant:{
            type:String,
-           required:[true,"Please add the variant of product"] 
+        //    required:[true,"Please add the variant of product"] 
     },
     price:{
         type:Number,
@@ -31,6 +31,7 @@ const productSchema = new mongoose.Schema({
     },
     size:{
         type: Number,
+        default:0
     },
     ratings:{
         type: Number,
