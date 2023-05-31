@@ -108,7 +108,7 @@ export const newReview = (reviewData) => async (dispatch) => {
 export const createProduct = (productData) => async (dispatch) => {
   try {
 
-    console.log("pro data is ", productData);
+
     dispatch({ type: NEW_PRODUCT_REQUEST });
 
     const config = {

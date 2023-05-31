@@ -8,8 +8,6 @@ const cloudinary = require("cloudinary");
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   let images = [];
 
-  // console.log("por djjrve ", req.body);
-    console.log("hihihihi")
   try{
   if (typeof req.body.images === "string") {
     images.push(req.body.images);

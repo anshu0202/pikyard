@@ -54,11 +54,11 @@ useEffect(()=>{
 
   const increaseQuantity = async(id, quantity, stock, item) => {
 
-    console.log("item is ",item)
+   
   const data=await getVariantDetail(item.productName,item.size)
     
   if(data){
-    // console.log("data varinat is ",data);
+  
     if(data.Stock>=quantity+1){
       // const newQty = quantity + 1;
         const res=await updateCartItem(id,quantity+1);
