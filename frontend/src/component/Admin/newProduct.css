@@ -24,6 +24,7 @@
     width: 40vh;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.267);
+    margin-bottom: 1vmax;
   }
   
   .createProductForm > div {
@@ -97,6 +98,46 @@
     outline: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
   }
+
+
+.addVariantAdmin{
+  padding: 0.5vmax 0.5vmax;
+  display: flex;
+  text-align: start;
+  padding-right: 1vmax;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.267);
+  border-radius: 4px;
+  font: 300 0.9vmax cursive;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.variantListAdmin{
+  align-items: center;
+  margin: auto;
+  padding: 1vmax;
+  justify-content: space-evenly;
+  width: 40vh;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.267);
+  margin-bottom: 1vmax;
+}
+.variantListAdmin>div{
+    display: flex;
+    width: 20vh;
+    margin: auto;
+    justify-content: space-around;
+    padding: 0.5vmax;
+}
+.variantListItemAdmin>svg{
+    width: 3vmax;
+    margin: 0 0.5vmax;
+}
+
+
+
   
   #createProductBtn:hover {
     background-color: #3BB77E;
@@ -136,3 +177,4 @@
       padding: 1.8vmax;
     }
   }
+

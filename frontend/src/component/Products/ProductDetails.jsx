@@ -33,10 +33,13 @@ const ProductDetails = ({ match, history }) => {
   const { variants } = useSelector((state) => state.getVariant.variants)
   const { isAuthenticated } = useSelector((state) => state.user);
 
+ 
+
 
  
   const [price, setPrice] = useState(product?.price);
   const [offerPrice, setOfferPrice] = useState(product?.price);
+  const [currStock,setCurrStock]=useState(product?.Stock);
 
   const updateProduct = (newProduct) => {
     setPrice(newProduct?.price);
@@ -52,6 +55,7 @@ const ProductDetails = ({ match, history }) => {
   useEffect(() => {
     // Call the function to update the initial price state when the component mounts
     if (product) {
+      setCurrStock(product.Stock);
       updateProduct(product);
     }
   }, [product])
@@ -93,8 +97,10 @@ const ProductDetails = ({ match, history }) => {
   
   // getting all the variants of the product on component did mount
   useEffect(() => {
+  
     dispatch(getVariants(product?.name))
-  }, []);
+  
+  }, [product]);
 
 
 
@@ -116,7 +122,8 @@ const ProductDetails = ({ match, history }) => {
 
 
   const increaseQuantity = () => {
-    if (product.Stock <= quantity) return toast.error("Product stock limited");
+    // if (product.Stock <= quantity) return toast.error("Product stock limited");
+    if (currStock <= quantity) return toast.error("Product stock limited");
     const qty = quantity + 1;
     setQuantity(qty);
   };
@@ -130,7 +137,10 @@ const ProductDetails = ({ match, history }) => {
 
   const handleSelectOption = (event) => {
     const selectedItem = variants?.find(item => item.mm == event.target.value);
+    
     setPrice(selectedItem.price)
+    setCurrStock(selectedItem.Stock);
+    setQuantity(1)
     setOfferPrice(parseInt(selectedItem.price - (selectedItem.price * product.offerPrice/ 100)));
     setSelectedOption(event.target.value);
   };
@@ -166,11 +176,13 @@ const ProductDetails = ({ match, history }) => {
 
   return (
     <>
-       {console.log("loading ", loading, "  vari ",variants?.length)}
+      
       {variants?.length===0 || variants?.length===undefined   ? (
-        <Loading />
+          
+         <Loading />
       ) : (
         <>
+       
           <MetaData title={`${product?.name}`} />
           <Header />
           <div className="ProductDetails">

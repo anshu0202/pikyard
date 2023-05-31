@@ -7,6 +7,9 @@ import Modal from '@mui/material/Modal';
 import StorageIcon from "@material-ui/icons/Storage";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import HeightIcon from '@mui/icons-material/Height';
+import { ToastContainer, toast } from 'react-toastify';
+
+
 
 import {useState} from "react"
 
@@ -28,18 +31,7 @@ const style = {
   alignItems: 'center',
 };
 
-const inputStyle = {
-  display: 'inline-block',
-  marginBottom: '1rem',
-  '& svg': {
-    marginRight: '1rem',
-  },
-  '& input': {
-    flex: '1',
-    padding: '0.5rem',
-    fontSize: '1rem',
-  },
-};
+
 
 const AddVariant = ({ open, setOpenModal,variant, setVariant }) => {
 //   const handleClose = () => setOpen(false);
@@ -52,6 +44,21 @@ const [variantItem, setVariantItem]=useState({
     
 
   const handleClick = () => {
+
+    if(variantItem.mm===0){
+      toast.error("Size of product cannot be 0")
+      return ;
+    }
+    
+    if(variantItem.price===0){
+      toast.error("Price of product cannot be 0")
+      return ;
+    }
+    if(variantItem.Stock===0){
+      toast.error("Stock of product cannot be 0")
+      return ;
+    }
+
     setOpenModal(false);
     setVariant([...variant,variantItem ]);
   };
@@ -69,20 +76,20 @@ const [variantItem, setVariantItem]=useState({
     <div>
       <Modal
         open={open}
-        // onClose={handleClose}
+        onClose={()=>setOpenModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div style={inputStyle}>
+          <div className='addVariantAdmin' >
             <HeightIcon />
             <input type="number" placeholder="Product Size" name="mm"  onChange={handleChange} />
           </div>
-          <div style={inputStyle}>
+          <div className='addVariantAdmin'>
             <AttachMoneyIcon />
             <input type="number" placeholder="Product Price"  name="price"  onChange={handleChange} required />
           </div>
-          <div style={inputStyle}>
+          <div className='addVariantAdmin' >
             <StorageIcon />
             <input type="number" placeholder="Stock"  name="Stock"  onChange={handleChange}required />
           </div>
@@ -92,6 +99,17 @@ const [variantItem, setVariantItem]=useState({
           </Button>
         </Box>
       </Modal>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

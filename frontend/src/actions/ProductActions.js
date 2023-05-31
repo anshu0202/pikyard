@@ -258,9 +258,10 @@ export const getVariants= (name) => async (dispatch)=>{
 
       dispatch({ type: ALL_VARIANT_REQUEST });
 
-       let link = `http:/api/v2/variants/${name}`;
+       let link = `/api/v2/variants/${name}`;
        
-      const {data} = await axios.get(link);    
+      const {data} = await axios.get(link);   
+      console.log("variant list is ",data); 
            dispatch({
           type:ALL_VARIANT_SUCCESS,
           payload: data,

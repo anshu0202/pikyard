@@ -80,7 +80,7 @@ exports.addToCart = catchAsyncErrors(async (req, res, next) => {
 
   const exists= await Cart.findOne({userId,productId,size})
 
-  console.log("exists -> ",exists);
+
 
   if(exists){
        const quantity=exists.quantity+1;  

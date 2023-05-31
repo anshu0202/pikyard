@@ -68,3 +68,19 @@ export const updateCartItem= async(id,quantity)=>{
         console.log("error while updating cart item ", error.message);
     }
 }
+
+
+
+//Api to get the details of selected variant of product
+
+
+export const getVariantDetail=async(name,size)=>{
+    try{
+        let result= await axios.get(`${URL}/variantDetail/${name}/${size}`);
+        // console.log("result is ",result.data.variant);
+        return result.data.variant
+    }
+    catch(error){
+        console.log("error while getting variant detail ", error.message);
+    }
+}

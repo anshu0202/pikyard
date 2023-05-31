@@ -21,6 +21,7 @@ import { addToCart } from "../service/cartApi";
       console.log("error is ",error.message)
       // dispatch({type:ADD_TO_CART_ERROR, payload:error.message})
     }
+    
 
   
 

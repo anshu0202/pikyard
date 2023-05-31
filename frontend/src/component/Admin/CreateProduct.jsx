@@ -51,7 +51,7 @@ const CreateProduct = ({ history }) => {
   ];
 
   const [variant,setVariant]=useState([]);
-    // console.log("v2 jj ",variant);
+    console.log("v2 jj ",variant);
 
   const [openModal,setOpenModal]=useState(false);
 
@@ -70,18 +70,17 @@ const CreateProduct = ({ history }) => {
 
   const createProductSubmitHandler = async(e) => {
     e.preventDefault();
-    console.log("v2 jj ",variant);
+   
 
-
-    // if(variant.length==0){
-    //   toast.error("Add atleast one variant of the product")
-    //   return;
-    // }
+    if(variant.length==0){
+      toast.error("Add atleast one variant of the product")
+      return;
+    }
 
 
 
     //Adding all the variants of product in the database;
-    // const addVariants=await createVariant(variant,name);
+    const addVariants=await createVariant(variant,name);
 
 
 
@@ -94,12 +93,12 @@ const CreateProduct = ({ history }) => {
     myForm.set("category", category);
     myForm.set("Stock", variant[0]?.Stock);
 
-    console.log("Stock is ",variant[0]?.Stock);
+    
    
     images.forEach((image) => {
       myForm.append("images", image);
     });
-    dispatch(createProduct(myForm));
+    // dispatch(createProduct(myForm));
 
   };
 
@@ -233,9 +232,33 @@ const CreateProduct = ({ history }) => {
             >
               Create
             </Button>
+            <div>
+            </div> 
           </form>
+          {
+
+variant.length>0 && 
+variant.map((item)=>(            
+<div className="variantListAdmin" >
+
+<div className="variantListItem" >
+<span style={{color:"gray"}} >Product Size (mm)  </span> <span>{item.mm} </span>
+</div>
+<div className="variantListItemAdmin">
+<span style={{color:"gray", display:"flex"}}  >Product Price  <AttachMoneyIcon /> </span> <span>{item.price}</span>
+</div>
+<div className="variantListItem">
+<span style={{color:"gray"}}>Product Stock </span> <span>{item.Stock}</span>
+</div>
+</div>
+  ))
+}
+          
           
         </div>
+                
+
+
       </div>
       <ToastContainer
         position="bottom-center"

@@ -14,8 +14,11 @@ const Header = () => {
 
    useEffect(async()=>{
     const data=await getCartItems();
-    setItemLength(data?.length);
-   },[]);
+    
+    if(data){
+      setItemLength(data?.length);
+    }
+   },[cartItems?.length]);
 
     
 
@@ -31,7 +34,10 @@ const Header = () => {
   })
 
   return (
-
+    
+    <>
+      {
+        itemLength===undefined?"":
      
     <div className="Header">
       {/* Header TopBar */}
@@ -231,8 +237,8 @@ const Header = () => {
                   right: "3.5%",
                 }}
               >
-                <span>{cartItems.length}</span>
-                 {/* <span>{itemLength}</span> */}
+                {/* <span>{cartItems?.length}</span> */}
+                 <span>{itemLength}</span>
               </div>
             </div>
           </div>
@@ -253,6 +259,8 @@ const Header = () => {
         </div>
       </div>
     </div>
+}
+    </>
 
   );
 };

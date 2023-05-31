@@ -85,3 +85,23 @@ exports.getAllVariants = catchAsyncErrors(async (req, res, next) => {
     variants,
   });
 });
+
+
+exports.getVariantDetail=catchAsyncErrors(async(req,res,next)=>{
+  const name=req.params.id1;
+  const mm=req.params.id2;
+  const variant=await Variant.findOne({name,mm});
+  if(variant){
+    res.status(200).json({
+      success: true,
+      variant,
+    });
+  }
+  else{
+    res.status(200).json({
+      success: false,
+      message: "No such variant exists",
+    });
+  }
+
+})

@@ -11,8 +11,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
+
 import { useEffect, useState } from "react";
-import { getCartItems , deleteCartItem, updateCartItem} from "../../service/cartApi";
+import { getCartItems , deleteCartItem, updateCartItem, getVariantDetail} from "../../service/cartApi";
 
 const Cart = ({ history }) => {
   const dispatch = useDispatch();
@@ -21,12 +22,17 @@ const Cart = ({ history }) => {
 
 
   const [items,setItems]=useState([]);
+ 
 
   const [tPrice,setTotalPrice]=useState(100);
 
+
+
 useEffect(()=>{
             getItems();
+           
 },[]);
+
 
    const  getItems= async()=>{
           const data=await getCartItems();
@@ -46,16 +52,24 @@ useEffect(()=>{
 
   let totalPrice = Price;
 
-  const increaseQuantity = async(id, quantity, stock) => {
-    const newQty = quantity + 1;
-    if (stock <= quantity) {
-      return toast.error("Product Stock Limited");
-    }
-      const res=await updateCartItem(id,quantity+1);
+  const increaseQuantity = async(id, quantity, stock, item) => {
+
+    console.log("item is ",item)
+  const data=await getVariantDetail(item.productName,item.size)
+    
+  if(data){
+    // console.log("data varinat is ",data);
+    if(data.Stock>=quantity+1){
+      // const newQty = quantity + 1;
+        const res=await updateCartItem(id,quantity+1);
       if(res){
-        
         getItems();
       }
+    }
+    else{
+      return toast.error("Product Stock Limited");
+    }
+  }
     
   };
 
@@ -69,11 +83,12 @@ useEffect(()=>{
 
   const deleteCartItems = async(id) => {
       const data= await deleteCartItem(id);
-      console.log("delete dd ", data);
+      
       if(data){
         getItems();
+        dispatch(removeItemsFromCart(id));
       }
-    // dispatch(removeItemsFromCart(id));
+   
   };
 
   const checkoutHandler = () => {
@@ -117,7 +132,8 @@ useEffect(()=>{
                         increaseQuantity(
                           item?._id,
                           item?.quantity,
-                          item?.Stock
+                          item?.Stock,
+                          item
                         )
                       }
                     >
