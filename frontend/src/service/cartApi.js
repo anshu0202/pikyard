@@ -8,7 +8,7 @@ const config = {
   };
 
 //Apis for cart items
-const userId=JSON.parse(localStorage.getItem("user"))._id
+const userId=JSON.parse(localStorage.getItem("user"))?._id
 
 
 
